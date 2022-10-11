@@ -13,7 +13,7 @@ using System.Diagnostics;
 using Session2._1_Assignment;
 
 [assembly: Parallelize(Workers = 10, Scope = ExecutionScope.MethodLevel)]
-namespace Homework_Session_2._1
+namespace Session2._1_Assignment
 {
     [TestClass]
     public class HttpClientTests
