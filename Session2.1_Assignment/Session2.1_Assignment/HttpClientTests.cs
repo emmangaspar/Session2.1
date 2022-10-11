@@ -132,10 +132,10 @@ namespace Homework_Session_2._1
 
             // Assertion
             Assert.AreEqual(HttpStatusCode.OK, statusCode, "Status code is not equal to 200");
-            Assert.AreEqual(pet.Id, listUserData.Id, "Pet Id is not successfully updated");
-            Assert.AreEqual(pet.Name, listUserData.Name, "Pet Name is not successfully updated");
+            Assert.AreEqual(pet.Id, listUserData.Id, "Pet Id is successfully updated");
+            Assert.AreEqual(pet.Name, listUserData.Name, "Pet Name is successfully updated");
             Assert.AreNotEqual(pet.Tags, listUserData.Tags, "Pet Tag is not successfully updated");
-            Assert.AreEqual(pet.Status, listUserData.Status, "Pet Status is not successfully updated");
+            Assert.AreEqual(pet.Status, listUserData.Status, "Pet Status is successfully updated");
 
 
             #endregion
