@@ -2,15 +2,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http;
 using System;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Diagnostics;
-using Session2._1_Assignment;
+using System.Collections.Generic;
 
 [assembly: Parallelize(Workers = 10, Scope = ExecutionScope.MethodLevel)]
 namespace Session2._1_Assignment
@@ -51,7 +46,7 @@ namespace Session2._1_Assignment
             #region create data
 
             // Create Json Object
-            PetModel pet = new PetModel()
+            PetModel petModel = new PetModel()
             {
                 Id = 1234,
                 Name = "doggie",
@@ -62,7 +57,7 @@ namespace Session2._1_Assignment
             };
 
             // Serialize Content
-            var request = JsonConvert.SerializeObject(pet);
+            var request = JsonConvert.SerializeObject(petModel);
             var postRequest = new StringContent(request, Encoding.UTF8, "application/json");
 
             // Send Post Request
@@ -73,7 +68,7 @@ namespace Session2._1_Assignment
             #region get Name of the created data
 
             // Get Request
-            var getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{pet.Id}"));
+            var getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petModel.Id}"));
 
             // Deserialize Content
             var listUserData = JsonConvert.DeserializeObject<PetModel>(getResponse.Content.ReadAsStringAsync().Result);
@@ -86,7 +81,7 @@ namespace Session2._1_Assignment
             #region send put request to update data
 
             // Update value of userData
-            pet = new PetModel()
+            petModel = new PetModel()
             {
                 Id = 4567,
                 Name = "doggieupdated",
@@ -97,7 +92,7 @@ namespace Session2._1_Assignment
             };
 
             // Serialize Content
-            request = JsonConvert.SerializeObject(pet);
+            request = JsonConvert.SerializeObject(petModel);
             postRequest = new StringContent(request, Encoding.UTF8, "application/json");
 
             // Send Put Request
@@ -111,13 +106,10 @@ namespace Session2._1_Assignment
             #region get updated data
 
             // Get Request
-            getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{pet.Id}"));
+            getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petModel.Id}"));
 
             // Deserialize Content
             listUserData = JsonConvert.DeserializeObject<PetModel>(getResponse.Content.ReadAsStringAsync().Result);
-
-            // filter created data
-            petData = listUserData.Name;
 
             #endregion
 
@@ -132,10 +124,10 @@ namespace Session2._1_Assignment
 
             // Assertion
             Assert.AreEqual(HttpStatusCode.OK, statusCode, "Status code is not equal to 200");
-            Assert.AreEqual(pet.Id, listUserData.Id, "Pet Id is successfully updated");
-            Assert.AreEqual(pet.Name, listUserData.Name, "Pet Name is successfully updated");
-            Assert.AreNotEqual(pet.Tags, listUserData.Tags, "Pet Tag is not successfully updated");
-            Assert.AreEqual(pet.Status, listUserData.Status, "Pet Status is successfully updated");
+            Assert.AreEqual(petModel.Id, listUserData.Id, "Pet Id is successfully updated");
+            Assert.AreEqual(petModel.Name, listUserData.Name, "Pet Name is successfully updated");
+            Assert.AreNotEqual(petModel.Tags, listUserData.Tags, "Pet Tag is not successfully updated");
+            Assert.AreEqual(petModel.Status, listUserData.Status, "Pet Status is successfully updated");
 
 
             #endregion
